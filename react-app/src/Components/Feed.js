@@ -42,23 +42,8 @@ const Feed = () => {
       {
         data?.map(d =>
           <Post title={d.title} body={d.body} key={d.id} comments={d.comments} postId={d.id}/>
-          // <Comment comments={d.comments} />
         )
       }
-      {/* {
-        data?.map(d =>
-          <Comments comments={d.comments} />
-          // <Comment comments={d.comments} />
-        )
-      }
-      {
-        data?.map(d =>
-          <NewComment postId={d.id} />
-          // <Comment comments={d.comments} />
-        )
-      } */}
-      
-
       <NewPost/>
     </div>
   )
