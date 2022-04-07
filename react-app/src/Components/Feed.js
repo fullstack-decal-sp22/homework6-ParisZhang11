@@ -1,9 +1,12 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Post from "./Post";
 import NewPost from "./NewPost";
+import Comments from "./Comments";
+import NewComment from "./NewComment";
+import axios from 'axios';
 
 const Feed = () => {
-  const data = [
+  const d = [
     {
       "id": 1,
       "title": "sunt aut facere repellat provident occaecati excepturi optio reprehenderit",
@@ -21,13 +24,40 @@ const Feed = () => {
     },
   ]
 
+  const [data, setData] = useState();
+
+  const getPostsData = () => {
+    axios.get("http://localhost:3002/posts")
+      .then((data) => setData(data.data))
+      .catch((error) => console.log(error))
+  };
+
+  useEffect(() => {
+    getPostsData();
+  }, []);
+
+  console.log(data);
   return (
     <div style={{ maxWidth: '600px', marginLeft: 'auto', marginRight: 'auto'}}>
       {
-        data.map(d =>
-          <Post title={d.title} body={d.body} key={d.id} />
+        data?.map(d =>
+          <Post title={d.title} body={d.body} key={d.id} comments={d.comments} postId={d.id}/>
+          // <Comment comments={d.comments} />
         )
       }
+      {/* {
+        data?.map(d =>
+          <Comments comments={d.comments} />
+          // <Comment comments={d.comments} />
+        )
+      }
+      {
+        data?.map(d =>
+          <NewComment postId={d.id} />
+          // <Comment comments={d.comments} />
+        )
+      } */}
+      
 
       <NewPost/>
     </div>
